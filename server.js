@@ -63,6 +63,31 @@ app.get('/api/notes', (req, res) => {
     })
 });
 
+function findById(id, notes) {
+    const result = notes.filter((notes) => notes.id === id)[0];
+    return result;
+  };
+
+app.get('/api/notes/:id', (req, res) => {
+    const result = findById(req.params.id, notes);
+    if (result) {
+      res.json(result);
+    } else {
+      res.send(404);
+    }
+});
+
+
+/* use filter, splice or map for removing based on id, also use a for loop
+app.delete('/api/notes/:?', (req, res) => {
+    const result = findById(req.params.id, notes);
+    if (result) {
+      res.json(result);
+    } else {
+      res.send(404);
+    }
+}) */
+
 //run our server
 app.listen(PORT, (err) => {
     if(err) throw err;
@@ -70,6 +95,5 @@ app.listen(PORT, (err) => {
 });
 
 
+
 /* MAKE USE OF NETWORK TAB */
-/* DELETE PARAMETER BY ID  */
-/* API/NOTES/:? SPLICE (map, filter and find may be useful) FOR LOOP*/
