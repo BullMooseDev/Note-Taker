@@ -4,3 +4,5 @@
         "text":"Test text"
     }
 ]
+
+/* push new notes into the db.json array */
