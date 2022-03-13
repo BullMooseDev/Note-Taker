@@ -1,8 +1,1 @@
-[
-    {
-        "title":"Test Title",
-        "text":"Test text"
-    }
-]
-
-/* push new notes into the db.json array */
+[{"title":"Test Title","text":"Test text"}]
