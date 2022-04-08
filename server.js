@@ -2,7 +2,9 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { handle } = require('express/lib/application');
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
+const req = require('express/lib/request');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -31,7 +33,12 @@ app.post('/api/notes', (req, res) => {
   fs.readFile("./db/db.json", (err, data) => {
     if (err) throw err;
     const notes = JSON.parse(data);
+    let id = uuidv4();
     notes.push(req.body)
+
+    notes.forEach(object => {
+      object.id = id;
+    });
     
     fs.writeFile("./db/db.json", JSON.stringify(notes), (err) => {
       if (err) throw err;
@@ -54,6 +61,16 @@ app.get('/api/notes/:id', (req, res) => {
     res.send(404);
   }
 });
+
+app.delete('/api/notes/:id', (req,res) => {
+  Note.destroy(
+    {title: req.body.title},
+    {text: req.body.text},
+    {where: 
+      {id: req.params.id}
+    }
+  )
+})
 
 
 /* use filter, splice or map for removing based on id, also use a for loop
